@@ -39,28 +39,49 @@ Step by step breakdown of all the containers and other elements:
     * `Height` to `Parent.Height-Self.Y` to fill the rest of the screen
     * `Width`to `Parent.Width`
 3. `con_menu`:
-  * inside `con_parent`
-  * normal container
-  * `Flexible Width` to `Off`
-  * `Width` to `300`
-  * `Align in container` to `Stretch`
-  * add the menu component for additional style points
+    * inside `con_parent`
+    * normal container
+    * `Flexible Width` to `Off`
+    * `Width` to `300`
+    * `Align in container` to `Stretch`
+    * add the menu component for additional style points
 4. `con_content`:
-  * Vertical container
-  * inside `con_parent`
-  * `Fill` to `Color.Transparent`
-  * `Gap` to `8`
-  * `Drop shadow` to `None` 
-  * `Flexible Width` to `On`
-  * `Align in container` to `Stretch`
+    * Vertical container
+    * inside `con_parent`
+    * `Fill` to `Color.Transparent`
+    * `Gap` to `8`
+    * `Drop shadow` to `None` 
+    * `Flexible Width` to `On`
+    * `Align in container` to `Stretch`
 5. `con_contentTop`:
-  * Horizontal container
-  * inside `con_content`
-  * `Fill` to `Color.Transparent`
-  * `Gap` to `8`
-  * `Drop shadow` to `None` 
-  * `Flexible Height` to `Off`
-  * `Height` to `200`
+    * Horizontal container
+    * inside `con_content`
+    * `Fill` to `Color.Transparent`
+    * `Gap` to `8`
+    * `Drop shadow` to `None` 
+    * `Flexible Height` to `Off`
+    * `Height` to `200`
+6. `con_contentTopLeft`:
+    * Vertical container
+    * inside `con_contentTop`
+    * `Fill` to `Color.White`
+    * `Drop shadow` to `Regular` 
+    * `Flexible Width` to `On`
+7. `con_contentTopLeft`:
+    * Vertical container
+    * inside `con_contentTop`
+    * `Fill` to `Color.White`
+    * `Drop shadow` to `Regular` 
+    * `Flexible Width` to `Off`
+    * `Width` to `300`
+8. `con_contentBottom`:
+    * Vertical container
+    * inside `con_content`
+    * `Fill` to `Color.White`
+    * `Drop shadow` to `Regular` 
+    * `Flexible Height` to `On`
+
+Go play around and add some content to the different containers.
 
 
 ## Side quests
