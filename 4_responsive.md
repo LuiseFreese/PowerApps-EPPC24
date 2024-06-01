@@ -35,9 +35,9 @@ Step by step breakdown of all the containers and other elements:
 
 1. `Header`: One of the new composite controls. Make sure to drag it to the top-left corner and set the `Width` to `Parent.Width`
 2. `con_parent`: 
-  * Horizontal container, which we will put underneath the `Header`
-  * `Height` to `Parent.Height-Self.Y` to fill the rest of the screen
-  * `Width`to `Parent.Width`
+    * Horizontal container, which we will put underneath the `Header`
+    * `Height` to `Parent.Height-Self.Y` to fill the rest of the screen
+    * `Width`to `Parent.Width`
 3. `con_menu`:
   * inside `con_parent`
   * normal container
