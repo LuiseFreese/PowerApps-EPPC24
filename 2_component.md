@@ -1,4 +1,4 @@
-# Exercise 2: Turn the menu into a component
+# Exercise 1-2: Turn the menu into a component
 
 In the second exercise we will take our shiny menu and we'll turn it into a component to reuse it on multiple screens and apps.
 
