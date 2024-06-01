@@ -42,6 +42,8 @@ Furthermore there are side quests you can follow if you already finished the mai
 
 Download the reference msapp-file in the [Download-folder](downloads).
 
+![Open App](assets/open_msapp.gif)
+
 To open it in an Environemnt of your choice select `Create -> Dataverse -> Browse` and select the downloaded file.
 Make sure to save the app once it has loaded
 
