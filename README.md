@@ -38,4 +38,11 @@ The finished version will look something like this:
 While you should try to build everything on your own, this repository will assist you in building the app, when you are stuck.
 Furthermore there are side quests you can follow if you already finished the main tasks. The side quests are not discussed on this page, but the solution can be found in the reference app.
 
-You can also download the finished msapp-file as a reference in the [Download-folder](downloads)
+### Use the reference app
+
+Download the reference msapp-file in the [Download-folder](downloads).
+
+To open it in an Environemnt of your choice select `Create -> Dataverse -> Browse` and select the downloaded file.
+Make sure to save the app once it has loaded
+
+
