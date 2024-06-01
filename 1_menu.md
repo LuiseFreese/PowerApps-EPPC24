@@ -113,7 +113,7 @@ We will use this code on the `Fill` property of the button.
 If(
     ThisItem.id = gblSelected,
     ColorValue("#ff69b433"),
-    FontWeight.Lighter
+    Color.Transparent
 )
 ```
 
