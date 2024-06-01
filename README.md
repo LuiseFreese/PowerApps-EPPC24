@@ -6,11 +6,10 @@ Welcome to Mastering Modern Power Apps: Build Reusable, Responsive and Robust Bu
 
 1. Choosing the right data sources for your apps
 2. Good coding practices
-3. How to create reusable components
-4. Intro to accessibility and why you need to take care
-5. How to make apps accessible by design
-6. How to measure accessibility
-7. Using visual hierarchy and layouts to make your applications more accessible and comprehensible
+3. How to create a reusable menu
+4. A first look into modern controls
+5. Intro to accessibility and why you need to take care
+6. Container, container, container
 
 ## Prerequisites
 
@@ -20,15 +19,17 @@ To follow this tutorial you should have build a few Canvas Apps and should be fa
 
 ## Coding exercises
 
-Throughout the workshop, we will be rebuilding the Twitter frontpage in Power App Canvas Apps as an example to illustrate the concepts we discuss.
+In the first coding exercise, we will be building a menu component and in the second exercise, we will use containers to structure a whole screen.
 
-Click on the chapters to jump to the respective exercises
+### Exercise 1: Menu component
 
 1. [create a menu](1_menu.md)
 2. [make a menu component](2_component.md)
-3. [add accessibility features](3_accessibility.md)
-4. [make it multilingual](4_multilingual.md)
-5. [create a responsive screen](5_responsive.md)
+
+### Exercise 2: 
+
+1. [create a modal with containers](3_modal.md)
+2. [create a responsive screen](4_responsive.md)
 
 The finished version will look something like this:
 

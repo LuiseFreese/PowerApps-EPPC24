@@ -1,6 +1,6 @@
 # Exercise 1: Building the menu
 
-In the first exercise we will build a menu that resembles the twitter side menu. The left version are the main quests, the right version includes the side quests.
+In the first exercise we will build a menu with icons that you can reuse in many different apps.
 
 ![Menu](assets/1_menu.png)
 
@@ -20,34 +20,27 @@ In the first exercise we will build a menu that resembles the twitter side menu.
 
 ## Main quests
 
-Create an empty Canvas App from scratch in an environment of your choice. We WON'T use any special features that may be blocked by your admins. We als WON'T actually connect to the twitter API. So don't worry, every environment will do.
+Create an empty Canvas App from scratch in an environment of your choice. We WON'T use any special features that may be blocked by your admins. So don't worry, every environment will do.
 
 ### Create a menu collection
 
-This is the twitter-menu for reference (when logged in). We want to create a Power FX collection, that contains all the information we see in the menu.
-
-![Orignal-Menu](assets/1_original.png)
+First, we need to create a Power FX collection, that contains all the information we see in the menu.
 
 We will need:
 * an ID (will be important for the OnSelect-property, stay tuned!)
 * the label
-* an icon that roughly matches the twitter icons (we will use internal PowerApps icons in the first quick iteration)
+* an icon that roughly matches our text (we will use internal Power Apps icons in the first quick iteration)
 
 Add this piece of code to the `OnStart`-property of your App and run it.
 
 ```
-ClearCollect(
-    colMenu,
-    {id: 1, text: "Home", icon: Icon.Home},
-    {id: 2, text: "Explore", icon: Icon.TrendingHashtag},
-    {id: 3, text: "Notifications", icon: Icon.Bell},
-    {id: 4, text: "Messages", icon: Icon.Message},
-    {id: 5, text: "Lists", icon: Icon.DetailList},
-    {id: 6, text: "Bookmarks", icon: Icon.Bookmark},
-    {id: 7, text: "Twitter Blue", icon: Icon.Diamond},
-    {id: 8, text: "Profile", icon: Icon.Person},
-    {id: 9, text: "More", icon: Icon.More}
-)
+ClearCollect(colMenu,
+    {id: 1, text: "menu", icon: Icon.Hamburger},
+    {id: 2, text: "component", icon: Icon.Items},
+    {id: 3, text: "lunch", icon: Icon.ForkKnife},
+    {id: 4, text: "accessibility", icon: Icon.ZoomIn},
+    {id: 5, text: "container", icon: Icon.Manufacture}
+);
 ```
 
 ### Create a gallery
