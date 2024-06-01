@@ -14,9 +14,8 @@ In the first exercise we will build a menu with icons that you can reuse in many
 
 ## [Side quests overview](#user-content-side-quests)
 
-1. [throw in the real svg's](#user-content-throw-in-the-real-svgs)
-2. [toggle the svg's](#user-content-toggle-the-svgs)
-3. [add in the blue details in `home` and `notifications`](#user-content-add-in-the-blue-details-in-`home`-and-`notifications`)
+1. [Throw in the real svg's](#user-content-throw-in-the-real-svgs)
+2. [Make it expandable](#user-content-the-expandables)
 
 ## Main quests
 
@@ -56,14 +55,17 @@ We will create a simple gallery with an icon in the background and a transparent
 * Set the `Color` to `Color.Black`
 * Set the `Icon`-property to `ThisItem.icon`
 
-**Insert a `Button` inside the gallery**
+**Insert a `Label` inside the gallery**
+* Place it next to the button
 * Set the `Text` to `ThisItem.text`
-* Set the `Height` to `50`
-* Set `X` and `Y` to `4`
+
+**Insert a `Button` inside the gallery**
+* Set the `Height` to `Parent.TemplateHeight`
+* Set the `Width` to `Parent.TemplateWidth`
+* Set `X` and `Y` to `0`
 * Set the `Fill` to `Color.Transparent`
 * Set the `Color` to `Color.Black`
-* Align the text to the left
-* Set the `PaddingLeft` to `70`
+* Adjust the other Color properties
 
 The tree view of our gallery should look like this (after renaming the elements)
 
@@ -75,17 +77,16 @@ Add some finishing touches to the gallery styling and your result should look li
 
 ### Use the OnSelect-property
 
-Of course we created the menu to click on the buttons. We have 9 menu items but only one button we can work with.
+Of course we created the menu to click on the buttons. We have 5 menu items so far, but only one button we can work with.
 
 We will use this code on the button inside the gallery on the `OnSelect`-property.
 
-First we remember which item we clicked and store it in `varMenuItem`.
+First we remember which item we clicked and store it in `gblSelected`. We will use this to highlight our selected item in the next step.
 
-Afterwards we use `Switch()` to distinguish between the actions between clicking button 1 to 9. Those could navigate to different screens, open modal windows or do whatever we need in our apps.
+Afterwards we use `Switch()` to distinguish between the actions between clicking button 1 to 5. Those could navigate to different screens, open modal windows or do whatever we need in our apps.
 
 ```
-//we can use this to change parts of the UI if we need to
-Set(varMenuItem, ThisItem.id);
+Set(gblSelected, ThisItem.id);
 
 //This is the immediate action that happen on the click
 Switch(ThisItem.id,
@@ -98,72 +99,76 @@ Switch(ThisItem.id,
     //click on 3rd menu item
     3, Notify("Even more ACTION", NotificationType.Error)
 
-    //... repeat till 9
+    //... repeat till 5
 )
 ```
 
 ### Highlight the selected menu item
 
-In order to highlight the selected item we want to change the button text from a leight to a bold font weight.
+In order to highlight the selected item we want to change the button `Fill` to a semi-transparent version of a color.
 
-We will use this code on the `FontWeight` property of the button.
+We will use this code on the `Fill` property of the button.
 
 ```
 If(
-    ThisItem.id = varMenuItem,
-    FontWeight.Bold,
+    ThisItem.id = gblSelected,
+    ColorValue("#ff69b433"),
     FontWeight.Lighter
 )
 ```
 
+Use similar formulas to change the color of the icon and text.
+
 This should give us this effect after clicking on a menu item.
 
-![gallery](assets/1_selected.png)
+![gallery](assets/1_select.gif)
+
+**2 additional tips:**
+* use formulas for colours you need frequently, for example `primaryColor = App.Theme.Colors.Primary;` for an easy way to get to the primary Color of a modern theme
+* extract the Hex-Values of Power Apps colors to use them in SVG or html elements in your app or create a transparent version of the color. The `JSON` formula can help you here: `ColorValue(Mid(JSON(App.Theme.Colors.Primary), 2,7)&"33")` (you can also store them as a formula)
 
 
 ## Side quests
 
 ### Throw in the real svg's
 
-We will need to expand our collection a bit for all the information we need. The svg paths are taken directly from the homepage with the dev tools. For the first side quests we'll help you a bit so you don't have to extract all the paths.
+The built in icons don't look too nice and there is only a pretty limited selection of different icons available. So let's try to replace them with SVG images.
+We will need to expand our collection a bit for all the information we need. You can either chose your own images or take the ones that we prepared for you.
 
-The new `colMenuEnhanced` also has the `updates`-property on the "Home"-button and `messages`-property on the "Notifications" button. And it has two svg-paths for each icon, on for the selected and one for the normal state.
-
-The new `colMenuEnhanced` looks like this:
+The new `colMenuSVG` looks like this:
 
 ```
-ClearCollect(
-    colMenuEnhanced,
-    {id: 1, text: "Home", icon: Icon.Home, width: 130, svg_path:"M12 9c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2zm0-13.304L.622 8.807l1.06 1.696L3 9.679V19.5C3 20.881 4.119 22 5.5 22h13c1.381 0 2.5-1.119 2.5-2.5V9.679l1.318.824 1.06-1.696L12 1.696zM19 19.5c0 .276-.224.5-.5.5h-13c-.276 0-.5-.224-.5-.5V8.429l7-4.375 7 4.375V19.5z", svg_selected: "M12 1.696L.622 8.807l1.06 1.696L3 9.679V19.5C3 20.881 4.119 22 5.5 22h13c1.381 0 2.5-1.119 2.5-2.5V9.679l1.318.824 1.06-1.696L12 1.696zM12 16.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5z", updates: true},
-    {id: 2, text: "Explore", icon: Icon.TrendingHashtag, width: 140, svg_path:"M 10.09 3.098 L 9.72 7 h 5.99 l 0.39 -4.089 l 1.99 0.187 L 17.72 7 h 3.78 v 2 h -3.97 l -0.56 6 h 3.53 v 2 h -3.72 l -0.38 4.089 l -1.99 -0.187 l 0.36 -3.902 H 8.78 l -0.38 4.089 l -1.99 -0.187 L 6.77 17 H 2.5 v -2 h 4.46 l 0.56 -6 H 3.5 V 7 h 4.21 l 0.39 -4.089 l 1.99 0.187 Z M 14.96 15 l 0.56 -6 H 9.53 l -0.56 6 h 5.99 Z", svg_selected:"M10.64 3.157l-.36 3.593h4.99l.38-3.892 2.99.299-.36 3.593h2.97v2.5h-3.22l-.55 5.5h2.77v2.5h-3.02l-.39 3.892-2.98-.299.36-3.593H9.23l-.39 3.892-2.98-.299.36-3.593H2.75v-2.5h3.72l.55-5.5H3.75v-2.5h3.52l.38-3.892 2.99.299zm3.83 11.593l.55-5.5h-4.99l-.55 5.5h4.99z"},
-    {id: 3, text: "Notifications", icon: Icon.Bell, width: 180, svg_path:"M19.993 9.042C19.48 5.017 16.054 2 11.996 2s-7.49 3.021-7.999 7.051L2.866 18H7.1c.463 2.282 2.481 4 4.9 4s4.437-1.718 4.9-4h4.236l-1.143-8.958zM12 20c-1.306 0-2.417-.835-2.829-2h5.658c-.412 1.165-1.523 2-2.829 2zm-6.866-4l.847-6.698C6.364 6.272 8.941 4 11.996 4s5.627 2.268 6.013 5.295L18.864 16H5.134z", svg_selected:"M11.996 2c-4.062 0-7.49 3.021-7.999 7.051L2.866 18H7.1c.463 2.282 2.481 4 4.9 4s4.437-1.718 4.9-4h4.236l-1.143-8.958C19.48 5.017 16.054 2 11.996 2zM9.171 18h5.658c-.412 1.165-1.523 2-2.829 2s-2.417-.835-2.829-2z", messages: 2},
-    {id: 4, text: "Messages", icon: Icon.Message, width: 160, svg_path:"M1.998 5.5c0-1.381 1.119-2.5 2.5-2.5h15c1.381 0 2.5 1.119 2.5 2.5v13c0 1.381-1.119 2.5-2.5 2.5h-15c-1.381 0-2.5-1.119-2.5-2.5v-13zm2.5-.5c-.276 0-.5.224-.5.5v2.764l8 3.638 8-3.636V5.5c0-.276-.224-.5-.5-.5h-15zm15.5 5.463l-8 3.636-8-3.638V18.5c0 .276.224.5.5.5h15c.276 0 .5-.224.5-.5v-8.037z", svg_selected:"M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"},
-    {id: 5, text: "Lists", icon: Icon.DetailList, width: 120, svg_path:"M3 4.5C3 3.12 4.12 2 5.5 2h13C19.88 2 21 3.12 21 4.5v15c0 1.38-1.12 2.5-2.5 2.5h-13C4.12 22 3 20.88 3 19.5v-15zM5.5 4c-.28 0-.5.22-.5.5v15c0 .28.22.5.5.5h13c.28 0 .5-.22.5-.5v-15c0-.28-.22-.5-.5-.5h-13zM16 10H8V8h8v2zm-8 2h8v2H8v-2z", svg_selected:"M18.5 2h-13C4.12 2 3 3.12 3 4.5v15C3 20.88 4.12 22 5.5 22h13c1.38 0 2.5-1.12 2.5-2.5v-15C21 3.12 19.88 2 18.5 2zM16 14H8v-2h8v2zm0-4H8V8h8v2z"},
-    {id: 6, text: "Bookmarks", icon: Icon.Bookmark, width: 170, svg_path:"M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z", svg_selected:"M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5z"},
-    {id: 7, text: "Twitter Blue", icon: Icon.Diamond, width: 170, svg_path:"M15.704 8.99c.457-.05.891-.17 1.296-.35-.302.45-.685.84-1.125 1.15.004.1.006.19.006.29 0 2.94-2.269 6.32-6.421 6.32-1.274 0-2.46-.37-3.459-1 .177.02.357.03.539.03 1.057 0 2.03-.35 2.803-.95-.988-.02-1.821-.66-2.109-1.54.138.03.28.04.425.04.206 0 .405-.03.595-.08-1.033-.2-1.811-1.1-1.811-2.18v-.03c.305.17.652.27 1.023.28-.606-.4-1.004-1.08-1.004-1.85 0-.4.111-.78.305-1.11 1.113 1.34 2.775 2.22 4.652 2.32-.038-.17-.058-.33-.058-.51 0-1.23 1.01-2.22 2.256-2.22.649 0 1.235.27 1.647.7.514-.1.997-.28 1.433-.54-.168.52-.526.96-.992 1.23zM2 21h15c3.038 0 5.5-2.46 5.5-5.5 0-1.4-.524-2.68-1.385-3.65-.08-.09-.089-.22-.023-.32.574-.87.908-1.91.908-3.03C22 5.46 19.538 3 16.5 3H2v18zM16.5 5C18.433 5 20 6.57 20 8.5c0 1.01-.43 1.93-1.12 2.57-.468.43-.414 1.19.111 1.55.914.63 1.509 1.69 1.509 2.88 0 1.93-1.567 3.5-3.5 3.5H4V5h12.5z", svg_selected:"M16.5 3H2v18h15c3.038 0 5.5-2.46 5.5-5.5 0-1.4-.524-2.68-1.385-3.65-.08-.09-.089-.22-.023-.32.574-.87.908-1.91.908-3.03C22 5.46 19.538 3 16.5 3zm-.796 5.99c.457-.05.892-.17 1.296-.35-.302.45-.684.84-1.125 1.15.004.1.006.19.006.29 0 2.94-2.269 6.32-6.421 6.32-1.274 0-2.46-.37-3.459-1 .177.02.357.03.539.03 1.057 0 2.03-.35 2.803-.95-.988-.02-1.821-.66-2.109-1.54.138.03.28.04.425.04.206 0 .405-.03.595-.08-1.033-.2-1.811-1.1-1.811-2.18v-.03c.305.17.652.27 1.023.28-.606-.4-1.004-1.08-1.004-1.85 0-.4.111-.78.305-1.11 1.113 1.34 2.775 2.22 4.652 2.32-.038-.17-.058-.33-.058-.51 0-1.23 1.01-2.22 2.256-2.22.649 0 1.235.27 1.647.7.514-.1.997-.28 1.433-.54-.168.52-.526.96-.992 1.23z"},
-    {id: 8, text: "Profile", icon: Icon.Person, width: 130, svg_path:"M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z", svg_selected:"M17.863 13.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44zM12 2C9.791 2 8 3.79 8 6s1.791 4 4 4 4-1.79 4-4-1.791-4-4-4z"},
-    {id: 9, text: "More", icon: Icon.More, width: 120, svg_path:"M3.75 12c0-4.56 3.69-8.25 8.25-8.25s8.25 3.69 8.25 8.25-3.69 8.25-8.25 8.25S3.75 16.56 3.75 12zM12 1.75C6.34 1.75 1.75 6.34 1.75 12S6.34 22.25 12 22.25 22.25 17.66 22.25 12 17.66 1.75 12 1.75zm-4.75 11.5c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25S6 11.31 6 12s.56 1.25 1.25 1.25zm9.5 0c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25zM13.25 12c0 .69-.56 1.25-1.25 1.25s-1.25-.56-1.25-1.25.56-1.25 1.25-1.25 1.25.56 1.25 1.25z", svg_selected:"M3.75 12c0-4.56 3.69-8.25 8.25-8.25s8.25 3.69 8.25 8.25-3.69 8.25-8.25 8.25S3.75 16.56 3.75 12zM12 1.75C6.34 1.75 1.75 6.34 1.75 12S6.34 22.25 12 22.25 22.25 17.66 22.25 12 17.66 1.75 12 1.75zm-4.75 11.5c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25S6 11.31 6 12s.56 1.25 1.25 1.25zm9.5 0c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25zM13.25 12c0 .69-.56 1.25-1.25 1.25s-1.25-.56-1.25-1.25.56-1.25 1.25-1.25 1.25.56 1.25 1.25z"}
-)
+ClearCollect(colMenuSVG,
+    {id: 1, text: "menu", icon: Icon.Hamburger, svg: "<svg width='24' height='24' xmlns='http://www.w3.org/2000/svg'><path d='M17.75 3A3.25 3.25 0 0 1 21 6.25v11.5A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75V6.25A3.25 3.25 0 0 1 6.25 3h11.5Zm0 1.5H6.25A1.75 1.75 0 0 0 4.5 6.25v11.5c0 .966.784 1.75 1.75 1.75h11.5a1.75 1.75 0 0 0 1.75-1.75V6.25a1.75 1.75 0 0 0-1.75-1.75ZM7.75 7a.75.75 0 0 1 .743.648l.007.102v8.5a.75.75 0 0 1-1.493.102L7 16.25v-8.5A.75.75 0 0 1 7.75 7Z'/></svg>"},
+    {id: 2, text: "component", icon: Icon.Items, svg: "<svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M3 8.5v9.25A3.25 3.25 0 0 0 6.25 21h11.5A3.25 3.25 0 0 0 21 17.75V6.25A3.25 3.25 0 0 0 17.75 3H8.5v5.5H3ZM8.5 10v4h-4v-4h4Zm1.5 4v-4h4v4h-4Zm5.5 0v-4h4v4h-4ZM10 15.5h4v4h-4v-4Zm5.5 0h4v2.25a1.75 1.75 0 0 1-1.75 1.75H15.5v-4Zm0-11h2.25c.966 0 1.75.784 1.75 1.75V8.5h-4v-4Zm-1.5 4h-4v-4h4v4Zm-5.5 7v4H6.25a1.75 1.75 0 0 1-1.75-1.75V15.5h4Z'/></svg>"},
+    {id: 3, text: "lunch", icon: Icon.ForkKnife, svg: "<svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M18.25 3.25a.75.75 0 0 1 .743.648L19 4v16a.75.75 0 0 1-1.493.102L17.5 20v-5h-2.25a.75.75 0 0 1-.743-.648l-.007-.102V7a3.75 3.75 0 0 1 3.75-3.75Zm-6 0a.75.75 0 0 1 .743.648L13 4v4c0 1.953-1.4 3.578-3.25 3.93V20a.75.75 0 0 1-1.493.102L8.25 20v-8.07a4.002 4.002 0 0 1-3.245-3.722L5 8V4a.75.75 0 0 1 1.493-.102L6.5 4v4c0 1.12.736 2.067 1.75 2.386V4a.75.75 0 0 1 1.493-.102L9.75 4v6.385a2.502 2.502 0 0 0 1.743-2.2L11.5 8V4a.75.75 0 0 1 .75-.75ZM17.5 13.5V4.878a2.252 2.252 0 0 0-1.494 1.95L16 7v6.5h1.5V4.878 13.5Z' /></svg>"},
+    {id: 4, text: "accessibility", icon: Icon.ZoomIn, svg: "<svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M9.04 5.493a3 3 0 1 1 5.918.002l2.433-.908a2.359 2.359 0 0 1 1.766 4.372L16 10.334v.84a6.456 6.456 0 0 0-1.5.558V9.843a.75.75 0 0 1 .45-.688l3.608-1.57a.858.858 0 0 0-.643-1.592l-4.78 1.783c-.35.143-.734.222-1.135.222a2.99 2.99 0 0 1-1.17-.237L5.936 5.936a.85.85 0 0 0-.64 1.574l3.755 1.653a.75.75 0 0 1 .448.686v3.735a.75.75 0 0 1-.041.245L7.536 19.4a.82.82 0 0 0 1.545.549l1.65-4.527c.174-.478.551-.764.967-.857a6.526 6.526 0 0 0-.58 4.174l-.628 1.723a2.32 2.32 0 0 1-4.372-1.55L8 13.457v-3.12L4.693 8.884A2.35 2.35 0 0 1 6.461 4.53l2.58.962Zm1.46-.495a1.5 1.5 0 0 0 .896 1.373 1.75 1.75 0 0 0 1.187.01A1.5 1.5 0 1 0 10.5 4.997ZM23 17.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Zm-2.146-2.354a.5.5 0 0 0-.708 0L16.5 18.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708Z' /></svg>"},
+    {id: 5, text: "container", icon: Icon.Manufacture, svg: "<svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M8.75 2a.75.75 0 0 0-.75.75V5H5.75a.75.75 0 0 0-.75.75v4.764l-1.46.535a.75.75 0 0 0-.423 1.02l2.335 5.019a1.749 1.749 0 0 1 1.924.581l-2.554-5.492 6.587-2.412a1.75 1.75 0 0 1 1.19-.005l6.775 2.418-2.622 5.345a1.749 1.749 0 0 1 1.871-.408l2.468-5.031a.75.75 0 0 0-.421-1.037L19 10.451V5.75a.75.75 0 0 0-.75-.75H16V2.75a.75.75 0 0 0-.75-.75h-6.5Zm5.75 3h-5V3.5h5V5Zm3 1.5v3.416l-4.397-1.569a3.25 3.25 0 0 0-2.21.01L6.5 9.964V6.5h11ZM18.727 18.564l-.003-.01a.75.75 0 0 0-1.441-.023v.002l-.004.009-.02.058a3.854 3.854 0 0 1-.517.95c-.387.515-.939.95-1.742.95s-1.356-.435-1.743-.95a3.851 3.851 0 0 1-.538-1.009l-.003-.009a.75.75 0 0 0-1.435.001v.001l-.004.01a3.36 3.36 0 0 1-.115.29c-.089.198-.227.46-.42.716-.385.515-.936.95-1.742.95-.806 0-1.358-.435-1.744-.95a3.834 3.834 0 0 1-.535-1.007l-.003-.011a.75.75 0 0 0-1.441.02l-.003.009-.018.054a3.301 3.301 0 0 1-.504.922c-.384.49-.996.963-2.002.963a.75.75 0 0 0 0 1.5c1.574 0 2.587-.777 3.183-1.537L6 20.374l.056.076C6.608 21.185 7.556 22 9 22s2.392-.815 2.943-1.55l.057-.078.058.079C12.61 21.185 13.558 22 15 22c1.442 0 2.39-.815 2.942-1.55l.055-.075c.021.03.043.058.066.087.595.761 1.61 1.538 3.187 1.538a.75.75 0 0 0 0-1.5c-1.012 0-1.623-.473-2.005-.962a3.267 3.267 0 0 1-.518-.974Z'/></svg>"}
+);
 ```
 
-To display the svg-paths we can add an html-Text to the gallery and add this code aus `HtmlText`, which will display the normal icon:
+To display the svg-paths we can add an `Image` control to the gallery instead of the icons and add this code to the `Image` property, which will display the normal icon:
 ```
-$"<svg width='24px' height='24px' viewBox='0 0 24 24'>
-    <path d='{ThisItem.svg_path}'>
-</svg>"
+"data:image/svg+xml;utf8, " 
+& EncodeUrl(ThisItem.svg)"
 ```
 
-### Toggle the svg's
+If you want to read more about that topic [Matthew Devaney has got you covered](https://www.matthewdevaney.com/svg-images-in-power-apps/).
 
-Add this effect to the icons:
+For an extra challenge also try to add some color to the selected icons!
 
-![toggle](assets/1_toggle.gif)
+The finished product should look like this:
+![svg](assets/1_svg.gif)
 
-### Add in the blue details in `home` and `notifications`
 
-Add these (information alredy in the menu collection)
+### The expandables
 
-![highlights](assets/1_highlights.png)
+Add optional expandable/collapsible sections to your menu:
+
+![toggle](assets/1_expandable.gif)
+
+Side note:
+There are many different ways to achieve this. In the solution file uses a single gallery, you could also use nested galleries and a flexible height gallery for the outer one.
  
 
 

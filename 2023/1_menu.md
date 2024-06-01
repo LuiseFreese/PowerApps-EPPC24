@@ -1,6 +1,6 @@
 # Exercise 1: Building the menu
 
-In the first exercise we will build a menu that resembles the twitter side menu. The left version are the main quests, the right version includes the side quests.
+In the first exercise we will build a simple side menu, that you can use in nearly every app.
 
 ![Menu](assets/1_menu.png)
 
@@ -24,9 +24,7 @@ Create an empty Canvas App from scratch in an environment of your choice. We WON
 
 ### Create a menu collection
 
-This is the twitter-menu for reference (when logged in). We want to create a Power FX collection, that contains all the information we see in the menu.
-
-![Orignal-Menu](assets/1_original.png)
+We want to create a Power FX collection, that contains all the information we see in the menu.
 
 We will need:
 * an ID (will be important for the OnSelect-property, stay tuned!)
