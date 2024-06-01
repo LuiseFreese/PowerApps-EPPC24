@@ -68,6 +68,7 @@ btn_Confirm.Y+btn_Confirm.Height+Self.PaddingBottom
 ```
 
 This should be the result:
+
 ![responsive](assets/3_responsive.gif)
 
 ### 2. add a second button
