@@ -150,7 +150,7 @@ ClearCollect(colMenuSVG,
 To display the svg-paths we can add an `Image` control to the gallery instead of the icons and add this code to the `Image` property, which will display the normal icon:
 ```
 "data:image/svg+xml;utf8, " 
-& EncodeUrl(ThisItem.svg)"
+& EncodeUrl(ThisItem.svg)
 ```
 
 If you want to read more about that topic [Matthew Devaney has got you covered](https://www.matthewdevaney.com/svg-images-in-power-apps/).
